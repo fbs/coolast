@@ -1,6 +1,16 @@
+*.test
+*.dump
+lexer
+parser
+semant
+coolc
 *.cl
 README
 *.aps
 *.cc
 *.h
 *.d
+my*
+ref*
+*.dot
+*.png
