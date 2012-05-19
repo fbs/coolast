@@ -10,6 +10,10 @@
 #include "cool.h"
 #include "stringtab.h"
 #define yylineno curr_lineno;
+
+typedef int node_id_t;
+class dot_node;
+
 extern int yylineno;
 
 inline Boolean copy_Boolean(Boolean b) {return b; }
@@ -50,8 +54,6 @@ typedef Cases_class *Cases;
   virtual void dump_with_types(ostream&, int) = 0;	\
   virtual void dump_to_dot(std::ofstream&, int) = 0; 
 
-
-
 #define program_EXTRAS                          \
   void semant();     				\
   void dump_with_types(ostream&, int);		\
@@ -60,41 +62,38 @@ typedef Cases_class *Cases;
 #define Class__EXTRAS					\
   virtual Symbol get_filename() = 0;			\
   virtual void dump_with_types(ostream&,int) = 0;	\
-  virtual void dump_to_dot(std::ofstream&, int) = 0; 
-
+  virtual void dump_to_dot(std::ofstream&,dot_node*) = 0; 
 
 #define class__EXTRAS                                 \
   Symbol get_filename() { return filename; }	      \
   void dump_with_types(ostream&,int);		      \
-  void dump_to_dot(std::ofstream&, int);
-
+  void dump_to_dot(std::ofstream&,dot_node*);
 
 #define Feature_EXTRAS					\
   virtual void dump_with_types(ostream&,int) = 0;	\
-  virtual void dump_to_dot(std::ofstream&, int) = 0; 
-
+  virtual void dump_to_dot(std::ofstream&,dot_node*) = 0; 
 
 #define Feature_SHARED_EXTRAS			\
   void dump_with_types(ostream&,int);		\
-  void dump_to_dot(std::ofstream&, int); 
-
+  void dump_to_dot(std::ofstream&,dot_node*); 
 
 #define Formal_EXTRAS					\
   virtual void dump_with_types(ostream&,int) = 0;	\
-  virtual  void dump_to_dot(std::ofstream&, int) = 0; 
+  virtual  void dump_to_dot(std::ofstream&,dot_node*) = 0; 
   
 #define formal_EXTRAS                           \
   void dump_with_types(ostream&,int);		\
-  void dump_to_dot(std::ofstream&, int);
+  void dump_to_dot(std::ofstream&,dot_node*);	
+  /* Symbol get_name();				\ */
+  /* Symbol get_type_decl(); */
 
 #define Case_EXTRAS					\
   virtual void dump_with_types(ostream& ,int) = 0;	\
-  virtual void dump_to_dot(std::ofstream&, int) = 0; 
+  virtual void dump_to_dot(std::ofstream&,dot_node*) = 0; 
 
 #define branch_EXTRAS                                   \
   void dump_with_types(ostream& ,int);			\
-  void dump_to_dot(std::ofstream&, int); 
-
+  void dump_to_dot(std::ofstream&,dot_node*); 
 
 #define Expression_EXTRAS                    \
   Symbol type;				     \
@@ -103,10 +102,11 @@ typedef Cases_class *Cases;
   virtual void dump_with_types(ostream&,int) = 0;		\
   void dump_type(ostream&, int);				\
   Expression_class() { type = (Symbol) NULL; }			\
-  void dump_to_dot(std::ofstream&, int);			\
+  virtual void dump_to_dot(std::ofstream&,dot_node*) = 0;	\
+  void dump_type_dot(std::ofstream&,dot_node*);
 
 #define Expression_SHARED_EXTRAS           \
   void dump_with_types(ostream&,int);	   \
-  void dump_to_dot(std::ofstream&, int);
+  void dump_to_dot(std::ofstream&,dot_node*);
   
 #endif
